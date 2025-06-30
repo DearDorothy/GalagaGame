@@ -16,13 +16,15 @@ public class Ship extends FieldObject {
 
         this.x += dx * this.speed;
 
-        // Оповестил что произошло перемещение корабля
+        // Оповестил, что произошло перемещение корабля
         fireShipPayerIsMoved();
     }
 
-
     public void fire() {
+        Bullet bullet = new Bullet(this.x + 30 / 2, this.y);
 
+        // Оповестить, что корабль совершил выстрел
+        fireShipPlayerIsFire(bullet);
     }
 
     public void addShipPLayerListListener(ShipPlayerActionListener listener) { this.shipPlayerListListeners.add(listener); }
@@ -34,6 +36,14 @@ public class Ship extends FieldObject {
             ShipPlayerActionEvent event = new ShipPlayerActionEvent(listener);
             event.setShip(this);
             listener.shipIsMoved(event);
+        }
+    }
+
+    private void fireShipPlayerIsFire(Bullet bullet) {
+        for(ShipPlayerActionListener listener : this.shipPlayerListListeners) {
+            ShipPlayerActionEvent event = new ShipPlayerActionEvent(listener);
+            event.setBullet(bullet);
+            listener.shipIsFire(event);
         }
     }
 }

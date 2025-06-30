@@ -1,18 +1,24 @@
 package view;
 
+import model.field.fieldObject.Bullet;
 import presenter.ShipPlayerPresenter;
 import model.event.ShipPlayerActionEvent;
 import model.event.ShipPlayerActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel extends JPanel implements ShipPlayerActionListener{
 
-    private ShipPlayerActionEvent shipPlayerActionEvent;
+    private ShipPlayerActionEvent shipPlayerMovementEvent;
+    private ShipPlayerActionEvent shipPlayerFireEvent;
     private ShipPlayerPresenter shipPlayerPresenter;
     private Image imageShipPlayer;
     private Image imageBullet;
+
+    private List<Bullet> bulletList = new ArrayList<>();
 
     public GamePanel(ShipPlayerPresenter shipPlayerPresenter) {
         this.shipPlayerPresenter = shipPlayerPresenter;
@@ -22,8 +28,12 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
 
         Timer timer = new Timer(25, e -> {
             this.shipPlayerPresenter.hundleInput();
+            this.bulletList.removeIf(Bullet::isOffScreen);
+            for(Bullet bullet : this.bulletList) {
+                bullet.moveBullet();
+            }
+            repaint();
         });
-
         timer.start();
     }
 
@@ -37,20 +47,33 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
 
     @Override
     public void shipIsMoved(ShipPlayerActionEvent event) {
-        this.shipPlayerActionEvent = event;
+        this.shipPlayerMovementEvent = event;
         repaint();
+    }
+
+    @Override
+    public void shipIsFire(ShipPlayerActionEvent event) {
+        this.shipPlayerFireEvent = event;
+        this.bulletList.add(shipPlayerFireEvent.getBullet());
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (null == shipPlayerActionEvent) return;
+        if (null == shipPlayerMovementEvent) return;
 
         Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.drawImage(this.imageShipPlayer,
-                shipPlayerActionEvent.getShip().getX(),
-                shipPlayerActionEvent.getShip().getY(),
+                shipPlayerMovementEvent.getShip().getX(),
+                shipPlayerMovementEvent.getShip().getY(),
                 30, 30, this);
+
+        for(Bullet bullet : this.bulletList) {
+            graphics2D.drawImage(this.imageBullet,
+                    bullet.getX(),
+                    bullet.getY(),
+                    10,10, this);
+        }
     }
 }
