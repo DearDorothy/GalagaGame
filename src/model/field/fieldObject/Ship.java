@@ -21,7 +21,7 @@ public class Ship extends FieldObject {
     }
 
     public void fire() {
-        Bullet bullet = new Bullet(this.x + 30 / 2, this.y);
+        Bullet bullet = new Bullet(this.x + 15 / 2, this.y);
 
         // Оповестить, что корабль совершил выстрел
         fireShipPlayerIsFire(bullet);

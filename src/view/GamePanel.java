@@ -71,9 +71,8 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
 
         for(Bullet bullet : this.bulletList) {
             graphics2D.drawImage(this.imageBullet,
-                    bullet.getX(),
-                    bullet.getY(),
-                    10,10, this);
+                    bullet.getX(), bullet.getY(),
+                    bullet.getSizeBullet(), bullet.getSizeBullet(), this);
         }
     }
 }
