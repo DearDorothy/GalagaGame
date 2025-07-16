@@ -14,11 +14,11 @@ public class ShipPlayerActionEvent extends EventObject {
 
     public void setShip(Ship ship) { this.ship = ship; }
 
-    public Ship getShip() { return this.ship; }
+    public Ship getShip() { return ship; }
 
     public void setBullet(Bullet bullet) { this.bullet = bullet; }
 
-    public Bullet getBullet() { return this.bullet; }
+    public Bullet getBullet() { return bullet; }
 
     public ShipPlayerActionEvent(Object source) { super(source); }
 }

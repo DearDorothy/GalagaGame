@@ -14,6 +14,6 @@ public class Player {
     private Ship ship;
 
     public void move(int dx) {
-        this.ship.moveShip(dx);
+        ship.moveShip(dx);
     }
 }

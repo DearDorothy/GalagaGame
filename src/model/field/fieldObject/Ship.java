@@ -14,25 +14,25 @@ public class Ship extends FieldObject {
 
     public void moveShip(int dx) {
 
-        this.x += dx * this.speed;
+        x += dx * speed;
 
         // Оповестил, что произошло перемещение корабля
         fireShipPayerIsMoved();
     }
 
     public void fire() {
-        Bullet bullet = new Bullet(this.x + 15 / 2, this.y);
+        Bullet bullet = new Bullet(x + 15 / 2, y);
 
         // Оповестить, что корабль совершил выстрел
         fireShipPlayerIsFire(bullet);
     }
 
-    public void addShipPLayerListListener(ShipPlayerActionListener listener) { this.shipPlayerListListeners.add(listener); }
+    public void addShipPLayerListListener(ShipPlayerActionListener listener) { shipPlayerListListeners.add(listener); }
 
-    public void removeShipPlayerListListener(ShipPlayerActionListener listener) { this.shipPlayerListListeners.remove(listener); }
+    public void removeShipPlayerListListener(ShipPlayerActionListener listener) { shipPlayerListListeners.remove(listener); }
 
     private void fireShipPayerIsMoved() {
-        for(ShipPlayerActionListener listener : this.shipPlayerListListeners) {
+        for(ShipPlayerActionListener listener : shipPlayerListListeners) {
             ShipPlayerActionEvent event = new ShipPlayerActionEvent(listener);
             event.setShip(this);
             listener.shipIsMoved(event);
@@ -40,7 +40,7 @@ public class Ship extends FieldObject {
     }
 
     private void fireShipPlayerIsFire(Bullet bullet) {
-        for(ShipPlayerActionListener listener : this.shipPlayerListListeners) {
+        for(ShipPlayerActionListener listener : shipPlayerListListeners) {
             ShipPlayerActionEvent event = new ShipPlayerActionEvent(listener);
             event.setBullet(bullet);
             listener.shipIsFire(event);

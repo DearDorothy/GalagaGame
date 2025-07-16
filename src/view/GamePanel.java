@@ -28,8 +28,8 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
 
         Timer timer = new Timer(25, e -> {
             this.shipPlayerPresenter.hundleInput();
-            this.bulletList.removeIf(Bullet::isOffScreen);
-            for(Bullet bullet : this.bulletList) {
+            bulletList.removeIf(Bullet::isOffScreen);
+            for(Bullet bullet : bulletList) {
                 bullet.moveBullet();
             }
             repaint();
@@ -41,20 +41,20 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
         ImageIcon imageIconShipPlayer = new ImageIcon("resources/player.png");
         ImageIcon imageIconBullet = new ImageIcon("resources/bullet.png");
 
-        this.imageShipPlayer = imageIconShipPlayer.getImage();
-        this.imageBullet = imageIconBullet.getImage();
+        imageShipPlayer = imageIconShipPlayer.getImage();
+        imageBullet = imageIconBullet.getImage();
     }
 
     @Override
     public void shipIsMoved(ShipPlayerActionEvent event) {
-        this.shipPlayerMovementEvent = event;
+        shipPlayerMovementEvent = event;
         repaint();
     }
 
     @Override
     public void shipIsFire(ShipPlayerActionEvent event) {
-        this.shipPlayerFireEvent = event;
-        this.bulletList.add(shipPlayerFireEvent.getBullet());
+        shipPlayerFireEvent = event;
+        bulletList.add(shipPlayerFireEvent.getBullet());
     }
 
     @Override
@@ -64,13 +64,13 @@ public class GamePanel extends JPanel implements ShipPlayerActionListener{
         if (null == shipPlayerMovementEvent) return;
 
         Graphics2D graphics2D = (Graphics2D) g;
-        graphics2D.drawImage(this.imageShipPlayer,
+        graphics2D.drawImage(imageShipPlayer,
                 shipPlayerMovementEvent.getShip().getX(),
                 shipPlayerMovementEvent.getShip().getY(),
                 30, 30, this);
 
-        for(Bullet bullet : this.bulletList) {
-            graphics2D.drawImage(this.imageBullet,
+        for(Bullet bullet : bulletList) {
+            graphics2D.drawImage(imageBullet,
                     bullet.getX(), bullet.getY(),
                     bullet.getSizeBullet(), bullet.getSizeBullet(), this);
         }

@@ -7,12 +7,12 @@ public class Bullet extends FieldObject {
     public Bullet(int x, int y) { super(x, y, 12); }
 
     public void moveBullet() {
-        this.y -= this.speed;
+        y -= speed;
     }
 
-    public int getSizeBullet() { return this.size_bullet; }
+    public int getSizeBullet() { return size_bullet; }
 
     public boolean isOffScreen() {
-        return this.y + this.size_bullet < 0;
+        return y + size_bullet < 0;
     }
 }
